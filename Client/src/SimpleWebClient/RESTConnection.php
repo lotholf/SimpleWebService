@@ -1,4 +1,6 @@
 <?php
+namespace SimpleWebClient;
+
 // PHP class used to make requests to REST APIs
 class RESTConnection
 {

@@ -1,5 +1,15 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    Welcome to your new Silex Application!
+    <section id="contact_service">
+        {% if returnMessage %}
+            <div class="message_{{returnMessage.state}}">{{returnMessage.phrase}}</div>
+        {% endif %}
+        <div class="legend">Give us your personnal information:</div>
+        <form action="#" method="post">
+            {{ form_widget(form) }}
+
+            <input type="submit" name="submit" />
+        </form>
+    </section>
 {% endblock %}
