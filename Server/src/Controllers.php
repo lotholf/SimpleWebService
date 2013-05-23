@@ -3,7 +3,9 @@
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-use SimpleWebServer\;
+use SimpleWebServer\Resources\Contact,
+    SimpleWebServer\Utils\IOResources
+;
 
 // Error
 $app->error(function (\Exception $exception, $code) {
