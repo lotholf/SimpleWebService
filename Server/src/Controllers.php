@@ -8,17 +8,20 @@ use SimpleWebServer\Resources\Contact,
 ;
 
 // Error
-$app->error(function (\Exception $exception, $code) {
-    return new Response("ERROR", $code);
+$app->error(function (\Exception $exception, $code) use ($app) {
+    // Prepare JSON return
+    $error = array('message' => $exception->getMessage());
+    return $app->json($error, $code);
 });
-
 /*
     ROUTING  
 */
 // Homepage
 // Call BASE_URL/api.php
-$app->get('/', function () {
-    return new Response('Hello Sir', 200);
+$app->get('/', function () use ($app) {
+    // Prepare JSON return
+    $message = array('message' => "Hello Sir !");
+    return $app->json($message, 200);
 })
 ;
 
@@ -28,26 +31,36 @@ $app->get('/', function () {
 
 // Get all contacts
 // Call BASE_URL/api.php/contact
-$app->get('/contact', function () {
+$app->get('/contact', function () use ($app) {
     $contactWriter = new IOResources("../data/contacts.csv");
 
     $contacts = $contactWriter->readAll();
-    $res = "Il n'y a pas de contact";
-    if(count($contacts) > 0)
-    {
-        var_dump($contacts);
-        $res = "Tous les contacts";
-    }
-    return new Response($res, 200);
+
+    // Prepare JSON return
+    $message = array('contacts' => $contacts);
+    return $app->json($message, 200);
 })
 ;
 
-//Add one contact
-$app->post('/contact', function (Request $request) {
-    $contact = new Contact($request->get('lastname'), $request->get('firstname'), $request->get('mail'));
-    $contactWriter = new IOResources("../data/contacts.csv");
+// Add one contact
+$app->post('/contact', function (Request $request) use ($app) {
+    // Create an array with JSON data
+    $data = json_decode($request->getContent(), true);
 
-    $contactWriter->write($contact);
+    $message = array('message' => "Missing informations");
+    $code    = 400;
 
-    return new Response('Thank you for your contact data!', 201);
+    if($data['lastname'] && $data['firstname'] && $data['mail']) 
+    {
+        $contact = new Contact($data['lastname'], $data['firstname'], $data['mail']);
+        $contactWriter = new IOResources("../data/contacts.csv");
+
+        $contactWriter->write($contact);
+
+        // Prepare JSON return
+        $message = array('message' => "Thank you for your data");
+        $code = 201;
+    }
+
+    return $app->json($message, $code);
 });

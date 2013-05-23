@@ -34,6 +34,7 @@ class IOResources
                 throw new \Exception("File ".$this->filepath." doesn't open");
             }
 
+            // Read all the contact in the CSV file
             while($contact = fgetcsv($handle))
             {
                 $contacts[] = $contact; 
@@ -56,7 +57,7 @@ class IOResources
         {
             throw new \Exception("File ".$this->filepath." doesn't open");
         }
-
+        // Register contact in CSV file
         fputcsv($handle, $contact->toArray());
 
         fclose($handle);
