@@ -20,22 +20,27 @@ class IOResources
 
     /**
     * Return an array of data about all the contacts in the file
+    * Return an empty array if the file doesn't exist
     */
-    public function readAll($file)
+    public function readAll()
     {
-        $handle = fopen($this->filepath, 'r');
-        if(!$handler)
-        {
-            throw new Exception("File ".$this->filepath." doesn't open");
-        }
-
         $contacts = array();
-        while($contact = fputcsv($handle))
-        {
-            $contacts[] = $contact; 
-        }
 
-        fclose($handler);
+        if(file_exists($this->filepath))
+        {
+            $handle = fopen($this->filepath, 'r');
+            if(!$handle)
+            {
+                throw new \Exception("File ".$this->filepath." doesn't open");
+            }
+
+            while($contact = fgetcsv($handle))
+            {
+                $contacts[] = $contact; 
+            }
+
+            fclose($handle);
+        }
 
         return $contacts;
     }
@@ -45,14 +50,15 @@ class IOResources
     */
     public function write(Contact $contact)
     {
+
         $handle = fopen($this->filepath, 'a');
-        if(!$handler)
+        if(!$handle)
         {
-            throw new Exception("File ".$this->filepath." doesn't open");
+            throw new \Exception("File ".$this->filepath." doesn't open");
         }
 
         fputcsv($handle, $contact->toArray());
 
-        fclose($handler);
+        fclose($handle);
     }
 }

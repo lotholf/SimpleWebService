@@ -30,9 +30,15 @@ $app->get('/', function () {
 // Call BASE_URL/api.php/contact
 $app->get('/contact', function () {
     $contactWriter = new IOResources("../data/contacts.csv");
-    $contacts = $contactWriter->readAll($contact);
-    var_dump($contacts);
-    return new Response('Tous les contacts', 200);
+
+    $contacts = $contactWriter->readAll();
+    $res = "Il n'y a pas de contact";
+    if(count($contacts) > 0)
+    {
+        var_dump($contacts);
+        $res = "Tous les contacts";
+    }
+    return new Response($res, 200);
 })
 ;
 
