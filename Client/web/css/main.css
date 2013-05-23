@@ -1,0 +1,23 @@
+section#contact_service
+{
+    background-color: #F5E8C1;
+    width: 400px;
+    text-align: center;
+}
+
+div.legend 
+{
+    padding: 5px;
+}
+
+div.message_error 
+{
+    background-color: #E87676;
+    border: 1px solid #D91E1E;
+}
+
+div.message_ok
+{
+    background-color: #89FAA0;
+    border: 1px solid #1DB53B;
+}
