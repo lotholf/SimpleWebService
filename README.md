@@ -41,7 +41,7 @@ Afin de transmettre les informations vers l'application Serveur, on utilise la c
 Tests
 -----
 Des tests unitaires réalisés avec [atoum](https://github.com/atoum/atoum) sont mis en place du coté de l'application Serveur.
-[Travis-CI](https://travis-ci.org) permet de voir la stabilité des tests à chaque changement sur le projet.
+[Travis-CI](https://travis-ci.org) permet de voir la stabilité du projet à chaque changement sur le projet.
 
 
 Bientôt, des tests fonctionnels seront mis en place coté Serveur et Client.
